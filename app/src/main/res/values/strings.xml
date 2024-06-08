@@ -108,6 +108,7 @@
   <string name="install_step_copy">Copying dependencies</string>
   <string name="install_step_patch_manifests">Patching apk manifests</string>
   <string name="install_step_patch_icon">Patching app icon</string>
+  <string name="install_step_uncompress_dexes">Uncompressing dexes</string>
   <string name="install_step_add_injector">Adding Aliucord injector</string>
   <string name="install_step_add_aliuhook">Adding Aliuhook library</string>
   <string name="install_step_alignment">Aligning APKs</string>

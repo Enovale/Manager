@@ -29,6 +29,7 @@ class KotlinInstallRunner(options: InstallOptions) : StepRunner() {
         PatchManifestStep(options),
         AddInjectorStep(),
         AddAliuhookStep(),
+        UncompressDexesStep(),
 
         // Install
         AlignmentStep(),

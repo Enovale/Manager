@@ -13,6 +13,7 @@ object ManifestPatcher {
     private const val ANDROID_NAMESPACE = "http://schemas.android.com/apk/res/android"
     private const val USES_CLEARTEXT_TRAFFIC = "usesCleartextTraffic"
     private const val DEBUGGABLE = "debuggable"
+    private const val USE_EMBEDDED_DEX = "useEmbeddedDex"
     private const val REQUEST_LEGACY_EXTERNAL_STORAGE = "requestLegacyExternalStorage"
     private const val NETWORK_SECURITY_CONFIG = "networkSecurityConfig"
     private const val LABEL = "label"
@@ -88,12 +89,14 @@ object ManifestPatcher {
                             ) {
                                 private var addDebuggable = debuggable
                                 private var addLegacyStorage = true
+                                private var useEmbeddedDex = true
                                 private var addUseClearTextTraffic = true
 
                                 override fun attr(ns: String?, name: String, resourceId: Int, type: Int, value: Any?) {
                                     if (name == NETWORK_SECURITY_CONFIG) return
                                     super.attr(ns, name, resourceId, type, value)
                                     if (name == REQUEST_LEGACY_EXTERNAL_STORAGE) addLegacyStorage = false
+                                    if (name == USE_EMBEDDED_DEX) useEmbeddedDex = false
                                     if (name == DEBUGGABLE) addDebuggable = false
                                     if (name == USES_CLEARTEXT_TRAFFIC) addUseClearTextTraffic = false
                                 }
@@ -125,6 +128,7 @@ object ManifestPatcher {
 
                                 override fun end() {
                                     if (addLegacyStorage) super.attr(ANDROID_NAMESPACE, REQUEST_LEGACY_EXTERNAL_STORAGE, -1, TYPE_INT_BOOLEAN, 1)
+                                    if (useEmbeddedDex) super.attr(ANDROID_NAMESPACE, USE_EMBEDDED_DEX, -1, TYPE_INT_BOOLEAN, 1)
                                     if (addDebuggable) super.attr(ANDROID_NAMESPACE, DEBUGGABLE, -1, TYPE_INT_BOOLEAN, 1)
                                     if (addUseClearTextTraffic) super.attr(ANDROID_NAMESPACE, USES_CLEARTEXT_TRAFFIC, -1, TYPE_INT_BOOLEAN, 1)
                                     super.end()
